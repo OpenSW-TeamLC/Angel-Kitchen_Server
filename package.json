@@ -1,0 +1,19 @@
+{
+  "name": "angel-kitchen_server",
+  "version": "1.0.0",
+  "description": "팀 LC 천사식당 프로젝트 서버",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OpenSW-TeamLC/Angel-Kitchen_Server.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/OpenSW-TeamLC/Angel-Kitchen_Server/issues"
+  },
+  "homepage": "https://github.com/OpenSW-TeamLC/Angel-Kitchen_Server#readme"
+}
