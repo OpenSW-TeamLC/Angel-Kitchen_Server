@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/OpenSW-TeamLC/Angel-Kitchen_Server/issues"
   },
-  "homepage": "https://github.com/OpenSW-TeamLC/Angel-Kitchen_Server#readme"
+  "homepage": "https://github.com/OpenSW-TeamLC/Angel-Kitchen_Server#readme",
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
 }
