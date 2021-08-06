@@ -12,7 +12,10 @@ let config = {
 
 axios(config)
     .then(function (response) {
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
+        if(response.data) {
+            console.log('Success get Data!');
+        }
     })
     .catch(function (error) {
         console.log(error);
