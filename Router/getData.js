@@ -24,7 +24,8 @@ router.get('/', function (req, res) {
         .then(function (response) {
             // console.log(JSON.stringify(response.data));
             if (response.data) {
-                res.send(JSON.stringify(response.data));
+                // res.send(JSON.stringify(response.data));
+                res.send('Get success Data!')
             }
         })
         .catch(function (error) {
