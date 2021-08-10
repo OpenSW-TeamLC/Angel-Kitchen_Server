@@ -2,16 +2,8 @@ const express = require('express');
 const router = express.Router();
 let axios = require('axios');
 const mysql = require('mysql');
+
 const connection = mysql.createConnection(require('../Config/connectDB'));
-
-let config = {
-    method: 'get',
-    url: process.env.API_URL,
-    headers: {
-        'Cookie': 'SCOUTER=x4n12f8688mjeh; clientid=020097385071'
-    }
-};
-
 connection.connect((err) => {
     if (err) {
         console.log(err);
@@ -20,6 +12,13 @@ connection.connect((err) => {
     console.log('mysql connect completed!');
 });
 
+let config = {
+    method: 'get',
+    url: process.env.API_URL,
+    headers: {
+        'Cookie': 'SCOUTER=x4n12f8688mjeh; clientid=020097385071'
+    }
+};
 router.get('/', function (req, res) {
     axios(config)
         .then(function (response) {
