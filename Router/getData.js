@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 let axios = require('axios');
+const mysql = require('mysql');
+const connection = mysql.createConnection(require('../Config/connectDB'));
 
 let config = {
     method: 'get',
@@ -13,11 +15,17 @@ let config = {
 };
 
 router.get('/', function (req, res) {
+    connection.connect((err) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        console.log('mysql connect completed!');
+    });
     axios(config)
         .then(function (response) {
             // console.log(JSON.stringify(response.data));
             if (response.data) {
-                // console.log('Success get Data!');
                 res.send('Success get Data!');
             }
         })
