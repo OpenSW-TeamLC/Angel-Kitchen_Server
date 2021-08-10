@@ -12,13 +12,15 @@ connection.connect((err) => {
     console.log('mysql connect completed!');
 });
 
+const urlString = process.env.API_URL;
 let config = {
     method: 'get',
-    url: process.env.API_URL,
+    url: urlString,
     headers: {
         'Cookie': 'SCOUTER=x4n12f8688mjeh; clientid=020097385071'
     }
 };
+
 router.get('/', function (req, res) {
     axios(config)
         .then(function (response) {
