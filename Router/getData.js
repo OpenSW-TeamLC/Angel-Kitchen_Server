@@ -12,12 +12,11 @@ connection.connect((err) => {
     console.log('mysql connect completed!');
 });
 
-const urlString = process.env.API_URL;
 let config = {
     method: 'get',
-    url: urlString,
+    url: process.env.API_URL,
     headers: {
-        'Cookie': 'SCOUTER=x4n12f8688mjeh; clientid=020097385071'
+        'Cookie': 'SCOUTER=x4n12f8688mjeh; clientid=050097677414'
     }
 };
 
