@@ -4,8 +4,6 @@ let axios = require('axios');
 const mysql = require('mysql2/promise');
 
 const connection = mysql.createConnection(require('../Config/connectDB'));
-// connection.connect((err) => {     if (err) {         console.log(err);
-// return;     }     console.log('mysql connect completed!'); });
 
 let config = {
     method: 'get',
@@ -24,10 +22,10 @@ router.get('/', function (req, res) {
                 let readData = JSON.stringify(response.data.response.body.items[index]);
                 let data = JSON.parse(readData);
 
-                await (await connection).query(
+                await(await connection).query(
                     'INSERT INTO kitchen_table(fcltyNm, rdnmadr, lnmadr, phoneNumber, mlsvTrget, ml' +
-                            'svTime, mlsvDate, operOpenDate, latitude, longitude) VALUES(?,?,?,?,?,?,?,?,?,' +
-                            '?)',
+                            'svTime, mlsvDate, operOpenDate, latitude, longitude) SELECT ?,?,?,?,?,?,?,?,?,' +
+                            '? FROM DUAL WHERE NOT EXISTS(SELECT * FROM kitchen_table WHERE fcltyNm = ?)',
                     [
                         data.fcltyNm,
                         data.rdnmadr,
@@ -38,7 +36,8 @@ router.get('/', function (req, res) {
                         data.mlsvDate,
                         data.operOpenDate,
                         data.latitude,
-                        data.longitude
+                        data.longitude,
+                        data.fcltyNm
                     ],
                     (err, results, fields) => {
                         if (err) {
@@ -47,6 +46,7 @@ router.get('/', function (req, res) {
                     }
                 );
             }
+            (await connection).end();
             res
                 .status(201)
                 .json({"status": "success!"});
