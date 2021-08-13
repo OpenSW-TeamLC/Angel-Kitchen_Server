@@ -19,11 +19,12 @@ router.get('/', function (req, res) {
             for (let index = 0; index < dataLength; index++) {
                 let readData = JSON.stringify(response.data.response.body.items[index]);
                 let data = JSON.parse(readData);
-
+                
                 await(await connection).query(
                     'INSERT INTO kitchen_table(fcltyNm, rdnmadr, lnmadr, phoneNumber, mlsvTrget, ml' +
                             'svTime, mlsvDate, operOpenDate, latitude, longitude) SELECT ?,?,?,?,?,?,?,?,?,' +
-                            '? FROM DUAL WHERE NOT EXISTS(SELECT * FROM kitchen_table WHERE fcltyNm = ? AND rdnmadr = ?)',
+                            '? FROM DUAL WHERE NOT EXISTS(SELECT * FROM kitchen_table WHERE fcltyNm = ? AND' +
+                            ' rdnmadr = ?)',
                     [
                         data.fcltyNm,
                         data.rdnmadr,
@@ -46,7 +47,12 @@ router.get('/', function (req, res) {
                     }
                 );
             }
-            (await connection).end();
+            (await connection)
+                .end()
+                .then(console.log('Connection Disable!'))
+                .catch(e => {
+                    console.log(e);
+                });
             res
                 .status(201)
                 .json({"status": "success!"});
