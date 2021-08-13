@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
 let axios = require('axios');
-const mysql = require('mysql2/promise');
-
-const connection = mysql.createConnection(require('../Config/connectDB'));
+const connection = require('../Config/connectDB');
 
 let config = {
     method: 'get',
@@ -25,7 +23,7 @@ router.get('/', function (req, res) {
                 await(await connection).query(
                     'INSERT INTO kitchen_table(fcltyNm, rdnmadr, lnmadr, phoneNumber, mlsvTrget, ml' +
                             'svTime, mlsvDate, operOpenDate, latitude, longitude) SELECT ?,?,?,?,?,?,?,?,?,' +
-                            '? FROM DUAL WHERE NOT EXISTS(SELECT * FROM kitchen_table WHERE fcltyNm = ?)',
+                            '? FROM DUAL WHERE NOT EXISTS(SELECT * FROM kitchen_table WHERE fcltyNm = ? AND rdnmadr = ?)',
                     [
                         data.fcltyNm,
                         data.rdnmadr,
@@ -37,12 +35,14 @@ router.get('/', function (req, res) {
                         data.operOpenDate,
                         data.latitude,
                         data.longitude,
-                        data.fcltyNm
+                        data.fcltyNm,
+                        data.rdnmadr
                     ],
                     (err, results, fields) => {
                         if (err) {
                             throw err;
                         }
+                        console.log(results);
                     }
                 );
             }
