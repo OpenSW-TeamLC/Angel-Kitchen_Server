@@ -47,12 +47,6 @@ router.get('/', function (req, res) {
                     }
                 );
             }
-            (await connection)
-                .end()
-                .then(console.log('Connection Disable!'))
-                .catch(e => {
-                    console.log(e);
-                });
             res
                 .status(201)
                 .json({"status": "success!"});
