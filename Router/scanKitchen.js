@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
             .json({err: 'Incorrect distance'});
     }
 
-    const result = await(await connection).query(
+    let result = await(await connection).query(
         'SELECT *,(6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(l' +
                 'ongitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) AS scanRe' +
                 'sults FROM kitchen_table HAVING scanResults <= ? ORDER BY scanResults',
@@ -37,7 +37,9 @@ router.post('/', async (req, res) => {
             console.log(results);
         }
     );
-    res.send(result);
+    res
+        .status(200)
+        .send(result[0]);
 });
 
 module.exports = router;
