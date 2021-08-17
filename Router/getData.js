@@ -48,7 +48,7 @@ router.get('/', function (req, res) {
                 );
             }
             res
-                .status(201)
+                .status(200)
                 .json({"status": "success!"});
         })
         .catch(function (error) {
