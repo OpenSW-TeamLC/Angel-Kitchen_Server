@@ -6,6 +6,7 @@ const cors = require('cors');
 const getData = require('./Router/getData');
 const readData = require('./Router/readData');
 const scanKitchen = require('./Router/scanKitchen');
+const searchKitchen = require('./Router/searchKitchen');
 
 app.use(cors());
 app.use(express.json());
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
 app.use('/getdata', getData);
 app.use('/readdata', readData);
 app.use('/scankitchen', scanKitchen);
+app.use('/searchkitchen', searchKitchen);
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
