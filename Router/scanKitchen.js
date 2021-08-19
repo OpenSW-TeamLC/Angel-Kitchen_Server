@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
         }
     );
     res
-        .status(200)
+        .status(201)
         .send(result[0]);
 });
 
