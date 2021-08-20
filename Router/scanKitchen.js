@@ -10,15 +10,15 @@ router.post('/', async (req, res) => {
     console.log(lat, lot, distance);
 
     if (!lat) {
-        res
+        return res
             .status(400)
             .json({err: 'Incorrect latitude'});
     } else if (!lot) {
-        res
+        return res
             .status(400)
             .json({err: 'Incorrect longitude'});
     } else if (!distance) {
-        res
+        return res
             .status(400)
             .json({err: 'Incorrect distance'});
     }
@@ -37,6 +37,11 @@ router.post('/', async (req, res) => {
             console.log(results);
         }
     );
+    if (result[0].length == 0) {
+        return res
+            .status(400)
+            .json({err: 'No result found'});
+    }
     res
         .status(201)
         .send(result[0]);
