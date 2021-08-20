@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
     const lat = parseFloat(req.body.latitude);
     const lot = parseFloat(req.body.longitude);
     const distance = parseInt(req.body.distance, 10);
-    console.log(lat, lot, distance);
+    console.log('scanKitchen : ', lat, lot, distance);
 
     if (!lat) {
         return res

@@ -19,6 +19,7 @@ router.get('/', function (req, res) {
             for (let index = 0; index < dataLength; index++) {
                 let readData = JSON.stringify(response.data.response.body.items[index]);
                 let data = JSON.parse(readData);
+                // console.log(data);
                 
                 await(await connection).query(
                     'INSERT INTO kitchen_table(fcltyNm, rdnmadr, lnmadr, phoneNumber, mlsvTrget, ml' +

@@ -5,7 +5,7 @@ const connection = require('../Config/connectDB');
 router.get('/', async (req, res) => {
     const kitchenName = req.query.kitchenName;
     const kitchenPlace = req.query.kitchenPlace;
-    console.log(kitchenName, kitchenPlace);
+    console.log('searchKitchen : ', kitchenName, kitchenPlace);
 
     if (!kitchenName && !kitchenPlace) {
         res

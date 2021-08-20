@@ -4,7 +4,7 @@ const connection = require('../Config/connectDB');
 
 router.get('/', async (req, res) => {
     let result = await(await connection).query("SELECT * FROM kitchen_table");
-    // console.log(result[0]);
+    // console.log('readData : ', result[0]);
     if (result[0].length == 0) {
         return res
             .status(400)
