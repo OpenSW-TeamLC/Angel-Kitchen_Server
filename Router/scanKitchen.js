@@ -60,12 +60,9 @@ const connection = require('../Config/connectDB');
  *      - name: requestBody
  *        in: body
  *        description: 반경 내의 급식소 검색에 필요한 요청 값
+ *        required: true
  *        schema:
  *          type: object
- *          required:
- *              - latitude
- *              - longitude
- *              - distance
  *          properties:
  *              latitude:
  *                  type: number
