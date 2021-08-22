@@ -25,7 +25,7 @@ router.get('/', function (req, res) {
                     'INSERT INTO kitchen_table(fcltyNm, rdnmadr, lnmadr, phoneNumber, mlsvTrget, ml' +
                             'svTime, mlsvDate, operOpenDate, latitude, longitude) SELECT ?,?,?,?,?,?,?,?,?,' +
                             '? FROM DUAL WHERE NOT EXISTS(SELECT * FROM kitchen_table WHERE fcltyNm = ? AND' +
-                            ' rdnmadr = ?)',
+                            ' lnmadr = ?)',
                     [
                         data.fcltyNm,
                         data.rdnmadr,
@@ -38,7 +38,7 @@ router.get('/', function (req, res) {
                         data.latitude,
                         data.longitude,
                         data.fcltyNm,
-                        data.rdnmadr
+                        data.lnmadr
                     ],
                     (err, results, fields) => {
                         if (err) {
