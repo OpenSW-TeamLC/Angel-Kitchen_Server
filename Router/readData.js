@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const connection = require('../Config/connectDB');
-
 /**
  * @swagger
  * tags:
  *   name: readData
  *   description: kitchen_table DB 전체 조회
  * definitions:
- *   readData:
+ *   readResults:
  *     type: object
  *     required:
  *       - fcltyNm
@@ -52,7 +51,6 @@ const connection = require('../Config/connectDB');
  *         format: double
  *         description: 급식소 경도
  */
-
 /**
  * @swagger
  * /readdata:
@@ -62,11 +60,8 @@ const connection = require('../Config/connectDB');
  *       200:
  *         description: 조회 성공 리스트
  *         schema:
- *          $ref: '#/definitions/readData'
- *       400:
- *         description: 조회 성공 실패 시
+ *          $ref: '#/definitions/readResults'
  */
-
 router.get('/', async (req, res) => {
     let result = await(await connection).query("SELECT * FROM kitchen_table");
     // console.log('readData : ', result[0]);
