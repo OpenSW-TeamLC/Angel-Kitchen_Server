@@ -55,19 +55,21 @@ const connection = require('../Config/connectDB');
  *      parameters:
  *        - in: query
  *          name: kitchenName
+ *          description: 찾고자 하는 급식소 이름
  *          required: false
  *          schema:
  *            type: string
  *            description: 급식소 이름
  *        - in: query
  *          name: kitchenPlace
+ *          description: 찾고자 하는 급식소 지번주소
  *          required: false
  *          schema:
  *            type: string
  *            description: 급식소 지번주소 이름
  *      responses:
  *       200:
- *        description: 급식소 조회 성공 리스트
+ *        description: 해당 급식소 조회 성공 리스트
  *        schema:
  *          $ref: '#/definitions/searchResults'
  */

@@ -58,7 +58,7 @@ const connection = require('../Config/connectDB');
  *     tags: [readData]
  *     responses:
  *       200:
- *         description: 조회 성공 리스트
+ *         description: 전체 조회 성공 리스트
  *         schema:
  *          $ref: '#/definitions/readResults'
  */
