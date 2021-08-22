@@ -7,7 +7,7 @@ const getData = require('./Router/getData');
 const readData = require('./Router/readData');
 const scanKitchen = require('./Router/scanKitchen');
 const searchKitchen = require('./Router/searchKitchen');
-const {swaggerUi, specs} = require('./Router/swagger');
+const {swaggerUi, specs} = require('./swagger');
 
 app.use(cors());
 app.use(express.json());

@@ -15,7 +15,7 @@ const options = {
             email: 'smw7567@gmail.com'
         }
     },
-    apis: ['./*.js']
+    apis: ['./Router/*.js']
 };
 
 const specs = swaggereJsdoc(options);
