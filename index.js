@@ -7,7 +7,7 @@ const getData = require('./router/getData');
 const readData = require('./router/readData');
 const scanKitchen = require('./router/scanKitchen');
 const searchKitchen = require('./router/searchKitchen');
-const {swaggerUi, specs} = require('./swagger');
+const {swaggerUi, specs} = require('./swagger/swaggerOptions');
 
 app.use(cors()); //cors 미들웨어
 app.use(express.json()); // 요청 값 Json파싱 미들웨어
