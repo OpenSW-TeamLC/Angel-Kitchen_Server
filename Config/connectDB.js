@@ -7,9 +7,9 @@ const connection = mysql.createPool({
     password: process.env.DB_PW,
     port: process.env.DB_PORT,
     database: process.env.DB_NAME,
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0,
+    waitForConnections: true, // 연결 요청을 대기열 I/O 설정
+    connectionLimit: 10, // 한 번에 생성 가능한 최대 연결 수
+    queueLimit: 0 // 오류 반환 전 대기열에 넣을 최대 연결요청 수
 });
 
 module.exports = connection;

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const connection = require('../Config/connectDB');
+const connection = require('../config/connectDB'); // DB 연결 및 쿼리작성 변수
 /**
  * @swagger
  * tags:
@@ -83,24 +83,24 @@ const connection = require('../Config/connectDB');
  */
 router.post('/', async (req, res) => {
     // console.log(req.body); res.send(req.body)
-    const lat = parseFloat(req.body.latitude);
-    const lot = parseFloat(req.body.longitude);
-    const distance = parseInt(req.body.distance, 10);
-    console.log('scanKitchen : ', lat, lot, distance);
+    const lat = parseFloat(req.body.latitude); // 사용자 위치 위도
+    const lot = parseFloat(req.body.longitude); // 사용자 위치 경도
+    const distance = Math.abs(parseInt(req.body.distance, 10)); // 검색 반경 거리
+    // console.log('scanKitchen : ', lat, lot, distance);
 
     if (!lat) {
         return res
             .status(400)
-            .json({err: 'Incorrect latitude'});
+            .json({error: 'Incorrect latitude'});
     } else if (!lot) {
         return res
             .status(400)
-            .json({err: 'Incorrect longitude'});
+            .json({error: 'Incorrect longitude'});
     } else if (!distance) {
         return res
             .status(400)
-            .json({err: 'Incorrect distance'});
-    }
+            .json({error: 'Incorrect distance'});
+    } // 각각의 요청 값이 없을 경우 400 에러 코드 및 관련 메시지를 응답 전송
 
     let result = await(await connection).query(
         'SELECT *,(6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(l' +
@@ -108,22 +108,24 @@ router.post('/', async (req, res) => {
                 'sult FROM kitchen_table HAVING scanResult <= ? ORDER BY scanResult',
         [
             lat, lot, lat, distance
-        ],
-        (err, results, fields) => {
+        ], // 하버사인 공식을 통한 반경 내 급식소만을 조회
+        (err, results) => {
             if (err) {
-                throw err;
+                console.log('scanKitchen, Select query is now error by : ', err);
+                throw err; // select 처리 실패 시 에러 전송
             }
-            console.log(results);
+            console.log('Scan kitchen : ', results);
         }
     );
+    // console.log(result[0]);
     if (result[0].length == 0) {
         return res
             .status(400)
-            .json({err: 'No result found'});
+            .json({error: 'No result found'}); // 검색된 급식소가 없을 시 400 에러 코드 응답 전송
     }
     res
         .status(201)
-        .send(result[0]);
+        .send(result[0]); // 검색 성공 시 201 성공 코드 및 결과 값을 응답으로 전송
 });
 
 module.exports = router;

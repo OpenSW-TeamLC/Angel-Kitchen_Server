@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const connection = require('../Config/connectDB');
+const connection = require('../config/connectDB'); // DB 연결 및 쿼리작성 변수
 /**
  * @swagger
  * tags:
@@ -74,14 +74,14 @@ const connection = require('../Config/connectDB');
  *          $ref: '#/definitions/searchResults'
  */
 router.get('/', async (req, res) => {
-    const kitchenName = req.query.kitchenName;
-    const kitchenPlace = req.query.kitchenPlace;
-    console.log('searchKitchen : ', kitchenName, kitchenPlace);
+    const kitchenName = req.query.kitchenName; // 조회 하고자 하는 급식소 이름
+    const kitchenPlace = req.query.kitchenPlace; // 조회 하고자 하는 급식소 지번주소 이름
+    // console.log('searchKitchen : ', kitchenName, kitchenPlace);
 
     if (!kitchenName && !kitchenPlace) {
         res
             .status(400)
-            .json({err: 'Incorrect request query'});
+            .json({error: 'Incorrect request query'}); // 요청 값이 없을 경우 400 에러 코드 응답 전송
     }
 
     let result = await(await connection).query(
@@ -89,22 +89,24 @@ router.get('/', async (req, res) => {
         [
             '%' + kitchenName + '%',
             '%' + kitchenPlace + '%'
-        ],
-        (err, results, fields) => {
+        ], // 요청 값을 포함한 내용의 급식소 데이터만을 조회
+        (err, results) => {
             if (err) {
-                throw err;
+                console.log('searchKitchen, Select query is now error by : ', err);
+                throw err; // select 처리 실패 시 에러 전송
             }
-            console.log(results);
+            console.log('Search kitchen : ', results);
         }
     );
+    // console.log(result[0]);
     if (result[0].length == 0) {
         return res
             .status(400)
-            .json({err: 'No result found'});
+            .json({error: 'No result found'}); // 조회된 급식소가 없을 시 400 에러 코드 응답 전송
     }
     res
         .status(201)
-        .send(result[0]);
+        .send(result[0]); // 조회 성공 시 201 성공 코드와 결과 값을 응답으로 전송
 });
 
 module.exports = router;
