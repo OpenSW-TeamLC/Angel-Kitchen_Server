@@ -59,7 +59,7 @@ const connection = require('../config/connectDB'); // DB 연결 및 쿼리작성
  *     parameters:
  *      - name: requestBody
  *        in: body
- *        description: 반경 내의 급식소 검색에 필요한 요청 값
+ *        description: 반경 내 급식소 검색에 필요한 요청 내용
  *        required: true
  *        schema:
  *          type: object
@@ -67,19 +67,51 @@ const connection = require('../config/connectDB'); // DB 연결 및 쿼리작성
  *              latitude:
  *                  type: number
  *                  format: double
- *                  description: 사용자의 위도 값
+ *                  description: 사용자의 위치 위도 값
  *              longitude:
  *                  type: number
  *                  format: double
- *                  description: 사용자의 경도 값
+ *                  description: 사용자의 위치 경도 값
  *              distance:
  *                  type: integer
  *                  description: 검색하고자 하는 반경 값
  *     responses:
  *       200:
- *         description: 검색된 급식소 정보 리스트
+ *         description: 검색 성공
  *         schema:
  *          $ref: '#/definitions/scanResults'
+ *       400:
+ *         description: 요청 값이 올바르지 않음
+ *         schema:
+ *          type: object
+ *          properties:
+ *              error:
+ *                  type: object
+ *                  properties:
+ *                      code:
+ *                          type: integer
+ *                          example: 400
+ *                          description: 상태 코드
+ *                      contents:
+ *                          type: string
+ *                          example: Incorrect ???
+ *                          description: 에러 내용
+ *       404:
+ *         description: 검색된 급식소가 없음
+ *         schema:
+ *          type: object
+ *          properties:
+ *              error:
+ *                  type: object
+ *                  properties:
+ *                      code:
+ *                          type: integer
+ *                          example: 404
+ *                          description: 상태 코드
+ *                      contents:
+ *                          type: string
+ *                          example: No result found
+ *                          description: 에러 내용
  */
 router.post('/', async (req, res) => {
     // console.log(req.body); res.send(req.body)
@@ -120,8 +152,8 @@ router.post('/', async (req, res) => {
     // console.log(result[0]);
     if (result[0].length == 0) {
         return res
-            .status(400)
-            .json({error: 'No result found'}); // 검색된 급식소가 없을 시 400 에러 코드 응답 전송
+            .status(404)
+            .json({error: 'No result found'}); // 검색된 급식소가 없을 시 404 에러 코드 응답 전송
     }
     res
         .status(201)

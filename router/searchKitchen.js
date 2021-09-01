@@ -5,7 +5,7 @@ const connection = require('../config/connectDB'); // DB 연결 및 쿼리작성
  * @swagger
  * tags:
  *   name: searchKitchen
- *   description: 지정 급식소 정보 조회
+ *   description: 지정 급식소 상세 정보 조회
  * definitions:
  *   searchResults:
  *     type: object
@@ -55,23 +55,51 @@ const connection = require('../config/connectDB'); // DB 연결 및 쿼리작성
  *      parameters:
  *        - in: query
  *          name: kitchenName
+ *          required: true
+ *          type: string
  *          description: 찾고자 하는 급식소 이름
- *          required: false
- *          schema:
- *            type: string
- *            description: 급식소 이름
  *        - in: query
  *          name: kitchenPlace
- *          description: 찾고자 하는 급식소 지번주소
+ *          description: 찾고자 하는 급식소 지번주소에 포함된 명칭
  *          required: false
- *          schema:
- *            type: string
- *            description: 급식소 지번주소 이름
+ *          type: string
  *      responses:
  *       200:
- *        description: 해당 급식소 조회 성공 리스트
+ *        description: 조회 성공
  *        schema:
  *          $ref: '#/definitions/searchResults'
+ *       400:
+ *         description: 요청 값이 올바르지 않음
+ *         schema:
+ *          type: object
+ *          properties:
+ *              error:
+ *                  type: object
+ *                  properties:
+ *                      code:
+ *                          type: integer
+ *                          example: 400
+ *                          description: 상태 코드
+ *                      contents:
+ *                          type: string
+ *                          example: Incorrect request query
+ *                          description: 에러 내용
+ *       404:
+ *         description: 조회된 지정 급식소가 없음
+ *         schema:
+ *          type: object
+ *          properties:
+ *              error:
+ *                  type: object
+ *                  properties:
+ *                      code:
+ *                          type: integer
+ *                          example: 404
+ *                          description: 상태 코드
+ *                      contents:
+ *                          type: string
+ *                          example: No result found
+ *                          description: 에러 내용
  */
 router.get('/', async (req, res) => {
     const kitchenName = req.query.kitchenName; // 조회 하고자 하는 급식소 이름
@@ -101,8 +129,8 @@ router.get('/', async (req, res) => {
     // console.log(result[0]);
     if (result[0].length == 0) {
         return res
-            .status(400)
-            .json({error: 'No result found'}); // 조회된 급식소가 없을 시 400 에러 코드 응답 전송
+            .status(404)
+            .json({error: 'No result found'}); // 조회된 급식소가 없을 시 404 에러 코드 응답 전송
     }
     res
         .status(201)
