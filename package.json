@@ -4,7 +4,6 @@
   "description": "팀 LC 천사식당 프로젝트 서버",
   "main": "index.js",
   "scripts": {
-    "prestart": "next build",
     "start": "nodemon ."
   },
   "repository": {
