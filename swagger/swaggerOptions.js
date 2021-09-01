@@ -15,7 +15,7 @@ const options = {
             email: 'smw7567@gmail.com'
         }
     },
-    apis: ['./Router/*.js'] // swagger가 인식할 api 경로
+    apis: ['./router/*.js'] // swagger가 인식할 api 경로
 };
 
 const specs = swaggereJsdoc(options); // 옵션 값을 토대로 문서화
