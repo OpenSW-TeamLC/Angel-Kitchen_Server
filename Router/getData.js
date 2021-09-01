@@ -7,7 +7,7 @@ let config = {
     method: 'get',
     url: process.env.API_URL,
     headers: {
-        'Cookie': 'SCOUTER=x4n12f8688mjeh; clientid=020048023665'
+        'Cookie': 'SCOUTER=x4n12f8688mjeh;'
     }
 };
 
