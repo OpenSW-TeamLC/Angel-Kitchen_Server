@@ -135,7 +135,7 @@ router.post('/', async (req, res) => {
     } // 각각의 요청 값이 없을 경우 400 에러 코드 및 관련 메시지를 응답 전송
 
     let result = await(await connection).query(
-        'SELECT *,(6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(l' +
+        'SELECT fcltyNm,rdnmadr,latitude,longitude,(6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(l' +
                 'ongitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) AS scanRe' +
                 'sult FROM kitchen_table HAVING scanResult <= ? ORDER BY scanResult',
         [
