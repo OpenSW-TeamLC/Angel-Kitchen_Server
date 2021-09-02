@@ -14,10 +14,8 @@ Node.js v14.16.0
 
 MySQL v8.0.23
 
-Herouku cli v7.47.12
+Herouku-cli v7.47.12
 ```
-
-# Get Start
 
 # Open-source
 https://github.com/romainbutteaud/Kaffeine
