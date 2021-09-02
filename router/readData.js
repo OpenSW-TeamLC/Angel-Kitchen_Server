@@ -70,14 +70,21 @@ router.get('/', async (req, res) => {
     const kitchenCount = Math.abs(parseInt(req.query.kitchenCount, 10)); // 급식소 조회 개수
     // console.log('readData : ', kitchenCount);
     if (!kitchenCount) {
+        const resultJson = {
+            "error": {
+                "code": 400,
+                "contents": "Incorrect request query"
+            }
+        };
+        // console.log(typeof(resultJson));
         return res
             .status(400)
-            .json({error: 'Incorrect request query'}); // 요청 값이 없을 경우 400 에러 코드 전송
+            .json(resultJson); // 요청 값이 없을 경우 400 에러 코드 전송
     }
     // console.log(kitchenCount);
     let result = await(await connection).query(
         "SELECT id, fcltyNm FROM kitchen_table LIMIT ?",
-        [kitchenCount], // 개수 만큼의 급식소 데이터 조회
+        [kitchenCount],// 개수 만큼의 급식소 데이터 조회
         (err, results) => {
             if (err) {
                 console.log('readData, Select query is now error by : ', err);
@@ -88,13 +95,30 @@ router.get('/', async (req, res) => {
     );
     // console.log(result[0]);
     if (result[0].length == 0) {
+        const resultJson = {
+            "error": {
+                "code": 404,
+                "contents": "No result found"
+            }
+        };
+        // console.log(typeof(resultJson));
         return res
             .status(404)
-            .json({error: 'No result found'}); // 조회된 데이터가 없을 경우 404 에러 코드 응답 전송
+            .json(resultJson); // 조회된 데이터가 없을 경우 404 에러 코드 응답 전송
     }
+    const resultJson = {
+        "header": {
+            "resultCode": 200,
+            "type": "json",
+            "totalCount": result[0].length
+        },
+        "body": {
+            "items": result[0]
+        }
+    };
     res
         .status(200)
-        .send(result[0]); // 조회 성공시 성공 코드 및 결과 값을 응답으로 전송
+        .send(resultJson); // 조회 성공시 성공 코드 및 결과 값을 응답으로 전송
 });
 
 module.exports = router;
