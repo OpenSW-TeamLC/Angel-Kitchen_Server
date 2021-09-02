@@ -55,7 +55,7 @@ const connection = require('../config/connectDB'); // DB 연결 및 쿼리작성
  *      parameters:
  *        - in: query
  *          name: kitchenName
- *          required: true
+ *          required: false
  *          type: string
  *          description: 찾고자 하는 급식소 이름
  *        - in: query
