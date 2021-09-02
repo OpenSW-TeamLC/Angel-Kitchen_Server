@@ -19,25 +19,9 @@ const connection = require('../config/connectDB'); // DB 연결 및 쿼리작성
  *       rdnmadr:
  *         type: string
  *         description: 급식소 도로명주소
- *       lnmadr:
- *         type: string
- *         description: 급식소 지번주소
  *       phoneNumber:
  *         type: string
  *         description: 급식소 전화번호
- *       mlsvTrget:
- *         type: string
- *         description: 급식 대상
- *       mlsvTime:
- *         type: string
- *         description: 급식 시간
- *       mlsvDate:
- *         type: string
- *         description: 급식 요일
- *       operOpenDate:
- *         type: string
- *         format: date
- *         description: 급식소 운영시작일자
  *       latitude:
  *         type: number
  *         format: double
@@ -135,7 +119,7 @@ router.post('/', async (req, res) => {
     } // 각각의 요청 값이 없을 경우 400 에러 코드 및 관련 메시지를 응답 전송
 
     let result = await(await connection).query(
-        'SELECT fcltyNm,rdnmadr,latitude,longitude,(6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(l' +
+        'SELECT fcltyNm,rdnmadr,phoneNumber,latitude,longitude,(6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(l' +
                 'ongitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) AS scanRe' +
                 'sult FROM kitchen_table HAVING scanResult <= ? ORDER BY scanResult',
         [

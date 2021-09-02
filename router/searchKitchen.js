@@ -113,7 +113,7 @@ router.get('/', async (req, res) => {
     }
 
     let result = await(await connection).query(
-        "SELECT id,fcltyNm,rdnmadr,lnmadr,phoneNumber,mlsvTrget,mlsvDate,DATE_FORMAT(op" +
+        "SELECT id,fcltyNm,rdnmadr,lnmadr,phoneNumber,mlsvTrget,mlsvTime,mlsvDate,DATE_FORMAT(op" +
                 "erOpenDate, '%Y-%m-%d') AS operOpenDate,latitude,longitude FROM kitchen_table " +
                 "WHERE fcltyNm LIKE ? OR lnmadr LIKE ?",
         [
