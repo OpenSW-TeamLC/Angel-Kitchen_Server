@@ -107,9 +107,15 @@ router.get('/', async (req, res) => {
     // console.log('searchKitchen : ', kitchenName, kitchenPlace);
 
     if (!kitchenName && !kitchenPlace) {
-        res
+        const resultJson = {
+            "error": {
+                "code": 400,
+                "contents": "Incorrect request query"
+            }
+        };
+        return res
             .status(400)
-            .json({error: 'Incorrect request query'}); // 요청 값이 없을 경우 400 에러 코드 응답 전송
+            .json(resultJson); // 요청 값이 없을 경우 400 에러 코드 응답 전송
     }
 
     let result = await(await connection).query(
@@ -130,13 +136,29 @@ router.get('/', async (req, res) => {
     );
     // console.log(result[0]);
     if (result[0].length == 0) {
+        const resultJson = {
+            "error": {
+                "code": 404,
+                "contents": "No result found"
+            }
+        };
         return res
             .status(404)
-            .json({error: 'No result found'}); // 조회된 급식소가 없을 시 404 에러 코드 응답 전송
+            .json(resultJson); // 조회된 급식소가 없을 시 404 에러 코드 응답 전송
     }
+    const resultJson = {
+        "header": {
+            "resultCode": 200,
+            "type": "json",
+            "totalCount": result[0].length
+        },
+        "body": {
+            "items": result[0]
+        }
+    };
     res
-        .status(201)
-        .send(result[0]); // 조회 성공 시 201 성공 코드와 결과 값을 응답으로 전송
+        .status(200)
+        .json(resultJson); // 조회 성공 시 200 성공 코드와 결과 값을 응답으로 전송
 });
 
 module.exports = router;

@@ -118,7 +118,7 @@ router.get('/', async (req, res) => {
     };
     res
         .status(200)
-        .send(resultJson); // 조회 성공시 성공 코드 및 결과 값을 응답으로 전송
+        .json(resultJson); // 조회 성공시 성공 코드 및 결과 값을 응답으로 전송
 });
 
 module.exports = router;

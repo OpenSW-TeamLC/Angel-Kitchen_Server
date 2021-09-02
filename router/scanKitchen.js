@@ -105,17 +105,35 @@ router.post('/', async (req, res) => {
     // console.log('scanKitchen : ', lat, lot, distance);
 
     if (!lat) {
+        const resultJson = {
+            "error": {
+                "code": 400,
+                "contents": "Incorrect latitude"
+            }
+        };
         return res
             .status(400)
-            .json({error: 'Incorrect latitude'});
+            .json(resultJson);
     } else if (!lot) {
+        const resultJson = {
+            "error": {
+                "code": 400,
+                "contents": "Incorrect longitude"
+            }
+        };
         return res
             .status(400)
-            .json({error: 'Incorrect longitude'});
+            .json(resultJson);
     } else if (!distance) {
+        const resultJson = {
+            "error": {
+                "code": 400,
+                "contents": "Incorrect distance"
+            }
+        };
         return res
             .status(400)
-            .json({error: 'Incorrect distance'});
+            .json(resultJson);
     } // 각각의 요청 값이 없을 경우 400 에러 코드 및 관련 메시지를 응답 전송
 
     let result = await(await connection).query(
@@ -135,13 +153,29 @@ router.post('/', async (req, res) => {
     );
     // console.log(result[0]);
     if (result[0].length == 0) {
+        const resultJson = {
+            "error": {
+                "code": 404,
+                "contents": "No result found"
+            }
+        };
         return res
             .status(404)
-            .json({error: 'No result found'}); // 검색된 급식소가 없을 시 404 에러 코드 응답 전송
+            .json(resultJson); // 검색된 급식소가 없을 시 404 에러 코드 응답 전송
     }
+    const resultJson = {
+        "header": {
+            "resultCode": 201,
+            "type": "json",
+            "totalCount": result[0].length
+        },
+        "body": {
+            "items": result[0]
+        }
+    };
     res
         .status(201)
-        .send(result[0]); // 검색 성공 시 201 성공 코드 및 결과 값을 응답으로 전송
+        .json(resultJson); // 검색 성공 시 201 성공 코드 및 결과 값을 응답으로 전송
 });
 
 module.exports = router;
